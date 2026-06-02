@@ -59,7 +59,7 @@ async function doRegister() {
     return err.classList.remove('hidden');
   }
   try {
-    await POST('/auth/register', { nama, email, password, jurusan, semester: parseInt(semester) });
+    await POST('/api/auth/register', { nama, email, password, jurusan, semester: parseInt(semester) });
     showForm('login');
     document.getElementById('login-email').value = email;
     document.getElementById('login-error').textContent = '✅ Registrasi berhasil! Silakan masuk.';
