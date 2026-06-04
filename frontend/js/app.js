@@ -521,7 +521,7 @@ document.getElementById('h-jadwal')?.addEventListener && (async () => {
 /* ─── PROFIL ────────────────────────────────────────── */
 async function loadProfil() {
   try {
-    const data = await GET('/auth/me');
+    const data = await GET('/api/auth/me');
     document.getElementById('profil-avatar-display').textContent = data.nama[0].toUpperCase();
     document.getElementById('profil-nama-display').textContent = data.nama;
     document.getElementById('profil-jurusan-display').textContent = `${data.jurusan||'—'} · Semester ${data.semester||'?'}`;
