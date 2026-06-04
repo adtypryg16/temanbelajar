@@ -387,135 +387,239 @@ tr:hover td { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
 
-/* ─── RESPONSIVE ───────────────────────────────────── */
+/* ─── RESPONSIVE — TABLET (max 900px) ─────────────── */
 @media (max-width: 900px) {
   .auth-left { display: none; }
   .auth-right { padding: 32px 24px; }
-  .sidebar { width: 60px; }
+  .sidebar { width: 64px; }
   .nav-label, .brand-name, .user-info-sm { display: none; }
+  .nav-item { justify-content: center; padding: 12px; }
+  .nav-icon { width: auto; }
+  .sidebar-user { justify-content: center; padding: 16px 0; }
   .stats-grid, .admin-stats { grid-template-columns: repeat(2, 1fr); }
   .home-sections, .profil-layout { grid-template-columns: 1fr; }
-  .page { padding: 20px; }
+  .page { padding: 24px; }
+  .partner-grid { grid-template-columns: 1fr 1fr; }
 }
 
-/* ───── MOBILE FIX FINAL ───── */
-@media (max-width: 768px) {
+/* ─── RESPONSIVE — MOBILE (max 600px) ─────────────── */
+@media (max-width: 600px) {
 
-  /* layout umum */
-  .app {
-    flex-direction: column;
+  /* ── AUTH ── */
+  .auth-screen { flex-direction: column; }
+  .auth-left { display: none; }
+  .auth-right {
+    flex: 1;
+    padding: 32px 20px 40px;
+    align-items: flex-start;
   }
-/* ─── TOP NAVBAR ───────────────────────── */
-.sidebar {
-  width: 100%;
-  height: 64px;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+  .auth-form { max-width: 100%; }
+  .auth-form h2 { font-size: 26px; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
 
-/* brand kiri */
-.sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-family: var(--font-display);
-  font-size: 16px;
-  margin-right: 20px;
-}
+  /* ── APP LAYOUT — sidebar disembunyikan, pakai bottom nav ── */
+  .app { flex-direction: column; }
 
-/* nav jadi horizontal */
-.sidebar-nav {
-  display: flex;
-  flex-direction: row;
-  gap: 6px;
-  flex: 1;
-  padding: 0;
-}
+  .sidebar {
+    display: none;              /* sembunyikan sidebar kiri */
+  }
 
-/* item nav */
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
-/* user kanan */
-.sidebar-user {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: none;
-  padding: 0;
-}  /* halaman biar tidak ketutup sidebar bawah */
   .main-content {
-    padding-bottom: 80px;
+    flex: 1;
+    padding-bottom: 72px;       /* ruang untuk bottom nav */
+    overflow-y: auto;
   }
 
-  /* CHAT FIX */
+  /* ── BOTTOM NAVIGATION ── */
+  .bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+    padding: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .bottom-nav a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 10px 4px;
+    text-decoration: none;
+    color: var(--text2);
+    font-size: 10px;
+    font-weight: 500;
+    transition: color 0.15s;
+    position: relative;
+  }
+
+  .bottom-nav a.active,
+  .bottom-nav a:hover { color: var(--accent2); }
+
+  .bottom-nav a.active::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 20%; right: 20%;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 0 0 3px 3px;
+  }
+
+  .bottom-nav .nav-icon { font-size: 20px; width: auto; line-height: 1; }
+  .bottom-nav .badge {
+    position: absolute;
+    top: 6px; right: calc(50% - 18px);
+    min-width: 16px; height: 16px;
+    font-size: 9px;
+  }
+
+  /* ── PAGES ── */
+  .page { padding: 18px 16px 12px; }
+  .page-header { margin-bottom: 20px; }
+  .page-header h1 { font-size: 22px; }
+
+  /* ── STATS GRID ── */
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .stat-card { padding: 14px; gap: 10px; border-radius: var(--r); }
+  .stat-icon { font-size: 22px; }
+  .stat-val { font-size: 20px; }
+  .stat-lbl { font-size: 10px; }
+
+  /* ── HOME SECTIONS ── */
+  .home-sections { grid-template-columns: 1fr; gap: 14px; }
+  .home-card { padding: 18px; }
+  .home-card h3 { font-size: 15px; margin-bottom: 12px; }
+
+  /* ── PARTNER GRID ── */
+  .partner-grid { grid-template-columns: 1fr; gap: 12px; }
+  .partner-card { padding: 16px; gap: 12px; }
+  .p-avatar { width: 40px; height: 40px; font-size: 16px; }
+  .p-name { font-size: 15px; }
+  .partner-actions { flex-wrap: wrap; }
+  .partner-actions .btn-sm { flex: 1; text-align: center; }
+
+  /* ── FILTER BAR ── */
+  .filter-bar { flex-direction: column; gap: 8px; }
+  .filter-select { width: 100%; min-width: unset; }
+  .filter-bar .btn-primary { width: 100%; }
+
+  /* ── TABS ── */
+  .tabs, .admin-tabs { width: 100%; }
+  .tab { flex: 1; text-align: center; padding: 9px 8px; font-size: 13px; }
+
+  /* ── REQUESTS ── */
+  .request-card {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px;
+  }
+  .request-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* ── CHAT ── */
   .chat-layout {
     flex-direction: column;
-    height: 100vh;
+    height: calc(100vh - 72px);  /* kurangi bottom nav */
+    position: relative;
   }
 
+  /* daftar room jadi panel full-width yang bisa ditutup */
   .room-list-panel {
     width: 100%;
-    height: 40%;
+    height: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10;
+    transition: transform 0.25s ease;
+  }
+
+  .room-list-panel.slide-out {
+    transform: translateX(-100%);
   }
 
   .chat-panel {
-    height: 60%;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 9;
   }
 
-  /* message biar enak dibaca */
-  .msg {
-    max-width: 90%;
+  /* tombol kembali ke daftar room */
+  .chat-back-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: none;
+    border: none;
+    color: var(--accent2);
+    font-size: 14px;
+    cursor: pointer;
   }
 
-  /* filter & form stack */
-  .form-row {
-    grid-template-columns: 1fr;
-  }
+  .chat-header { gap: 8px; padding: 12px 14px; }
+  .chat-header-info h4 { font-size: 14px; }
 
-  .filter-bar {
-    flex-direction: column;
-  }
+  .messages-area { padding: 14px; gap: 10px; }
+  .msg { max-width: 88%; }
+  .msg-bubble { font-size: 13px; padding: 9px 12px; }
 
-  .filter-select {
+  .chat-input-area { padding: 10px 12px; gap: 8px; }
+  .chat-input-area input { padding: 10px 14px; font-size: 14px; }
+
+  /* ── JADWAL ── */
+  .jadwal-card {
+    flex-direction: row;
+    gap: 12px;
+    padding: 14px;
+    align-items: flex-start;
+  }
+  .jadwal-date { min-width: 60px; padding: 8px; }
+  .jadwal-num { font-size: 20px; }
+  .jadwal-title { font-size: 15px; }
+
+  /* ── PROFIL ── */
+  .profil-layout { grid-template-columns: 1fr; gap: 14px; }
+  .profil-card { padding: 22px; }
+  .profil-avatar { width: 70px; height: 70px; font-size: 24px; }
+  .profil-edit { padding: 20px; }
+  .matkul-checkboxes { grid-template-columns: 1fr; }
+
+  /* ── ADMIN ── */
+  .admin-stats { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .admin-search { flex-direction: column; gap: 8px; }
+  .admin-search input,
+  .admin-search select { width: 100%; }
+
+  /* tabel admin — horizontal scroll */
+  .admin-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 540px; }
+
+  /* ── MODAL ── */
+  .modal { align-items: flex-end; padding: 0; }
+  .modal-box {
     width: 100%;
+    max-width: 100%;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    padding: 24px 20px 32px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
   }
+  .modal-actions { flex-direction: column-reverse; }
+  .modal-actions .btn-primary,
+  .modal-actions .btn-outline,
+  .modal-actions .btn-danger { width: 100%; text-align: center; }
 
-  /* partner grid */
-  .partner-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* profil */
-  .profil-layout {
-    grid-template-columns: 1fr;
-  }
-
-  /* stats */
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  /* ── FORM ROW JADI SINGLE COL ── */
+  .form-row { grid-template-columns: 1fr; }
 }
 
-.main-content {
-  flex: 1;
-  overflow-y: auto;
-  background: var(--bg);
-  padding-top: 10px;
-}
-
+/* Sembunyikan bottom-nav di desktop secara default */
+.bottom-nav { display: none; }
