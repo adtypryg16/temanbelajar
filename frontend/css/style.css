@@ -519,12 +519,3 @@ tr:hover td { background: var(--surface); }
   }
 }
 
-/* smooth UI feel */
-* {
-  transition: all 0.2s ease;
-}
-
-/* scroll lebih halus */
-html {
-  scroll-behavior: smooth;
-}
