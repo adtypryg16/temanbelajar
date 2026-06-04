@@ -512,4 +512,29 @@ tr:hover td { background: var(--surface); }
   }
 }
 
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--bg);
+  padding-top: 10px;
+}
 
+@media (max-width: 768px) {
+  .sidebar-nav {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .sidebar-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-item {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .brand-name {
+    display: none; /* biar simple di HP */
+  }
+}
