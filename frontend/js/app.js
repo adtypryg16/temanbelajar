@@ -307,7 +307,7 @@ async function loadRequests(type) {
   const el = document.getElementById('requests-' + type);
   el.innerHTML = '<div class="loading-text">Memuat...</div>';
   try {
-    const data = await GET('/partner/requests/' + type);
+    const data = await GET('/api/partner/requests/' + type);
     if (!data.length) { el.innerHTML = '<div class="empty-state">Tidak ada permintaan</div>'; return; }
     el.innerHTML = data.map(r => {
       const nama = type === 'masuk' ? r.pengirim_nama : r.penerima_nama;
