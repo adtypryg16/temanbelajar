@@ -255,7 +255,7 @@ function openRequestModal(userId, nama) {
 
 async function submitRequest() {
   try {
-    await POST('/partner/request', { penerima_id: pendingRequestTarget, pesan: document.getElementById('modal-pesan').value });
+    await POST('/api/partner/request', { penerima_id: pendingRequestTarget, pesan: document.getElementById('modal-pesan').value });
     closeModal('modal-request');
     alert('Ajakan berhasil terkirim!');
   } catch(e) { alert(e.message); }
@@ -270,7 +270,7 @@ function openLaporModal(userId, nama) {
 
 async function submitLaporan() {
   try {
-    await POST('/admin/laporan', { terlapor_id: pendingLaporTarget, alasan: document.getElementById('modal-alasan').value });
+    await POST('/api/admin/laporan', { terlapor_id: pendingLaporTarget, alasan: document.getElementById('modal-alasan').value });
     closeModal('modal-lapor');
     alert('Laporan terkirim!');
   } catch(e) { alert(e.message); }
@@ -333,7 +333,7 @@ async function loadRooms() {
   const el = document.getElementById('room-list');
   el.innerHTML = '<div class="loading-text">Memuat...</div>';
   try {
-    const rooms = await GET('/chat/rooms');
+    const rooms = await GET('/api/chat/rooms');
     if (!rooms.length) { el.innerHTML = '<div class="loading-text">Belum ada room. Terima ajakan partner untuk membuat room!</div>'; return; }
     el.innerHTML = rooms.map(r => `
       <div class="room-item ${currentRoom?.id === r.id ? 'active':''}" onclick="openRoom(${r.id},'${esc(r.partner_nama||'Partner')}','${r.partner_avatar||''}')">
@@ -433,7 +433,7 @@ async function submitJadwal() {
   };
   if (!body.judul || !body.tanggal) return alert('Judul dan tanggal wajib diisi');
   try {
-    await POST(`/chat/rooms/${activeJadwalRoom}/jadwal`, body);
+    await POST(`/api/chat/rooms/${activeJadwalRoom}/jadwal`, body);
     closeModal('modal-jadwal');
     alert('Jadwal berhasil dibuat!');
     loadAllJadwal();
@@ -444,7 +444,7 @@ async function loadAllJadwal() {
   const el = document.getElementById('jadwal-list');
   el.innerHTML = '<div class="loading-text">Memuat...</div>';
   try {
-    const rooms = await GET('/chat/rooms');
+    const rooms = await GET('/api/chat/rooms');
     if (!rooms.length) { el.innerHTML = '<div class="empty-state">Belum ada jadwal. Buat jadwal dari halaman Chat.</div>'; return; }
     let allJadwal = [];
     for (const r of rooms) {
@@ -479,7 +479,7 @@ async function loadAllJadwal() {
 
 document.getElementById('h-jadwal')?.addEventListener && (async () => {
   try {
-    const rooms = await GET('/chat/rooms');
+    const rooms = await GET('/api/chat/rooms');
     let cnt = 0;
     const now = new Date();
     const weekLater = new Date(now.getTime() + 7*24*60*60*1000);
@@ -494,7 +494,7 @@ document.getElementById('h-jadwal')?.addEventListener && (async () => {
 /* ─── PROFIL ────────────────────────────────────────── */
 async function loadProfil() {
   try {
-    const data = await GET('/auth/me');
+    const data = await GET('/api/auth/me');
     document.getElementById('profil-avatar-display').textContent = data.nama[0].toUpperCase();
     document.getElementById('profil-nama-display').textContent = data.nama;
     document.getElementById('profil-jurusan-display').textContent = `${data.jurusan||'—'} · Semester ${data.semester||'?'}`;
@@ -541,7 +541,7 @@ async function saveProfile() {
 /* ─── ADMIN ─────────────────────────────────────────── */
 async function loadAdminStats() {
   try {
-    const s = await GET('/admin/stats');
+    const s = await GET('/api/admin/stats');
     document.getElementById('admin-stats').innerHTML = `
       <div class="stat-card"><div class="stat-icon">👥</div><div><div class="stat-val">${s.total_users}</div><div class="stat-lbl">Total Mahasiswa</div></div></div>
       <div class="stat-card"><div class="stat-icon">💬</div><div><div class="stat-val">${s.total_rooms}</div><div class="stat-lbl">Room Diskusi</div></div></div>
@@ -589,7 +589,7 @@ async function changeUserStatus(id, status) {
 async function loadAdminLaporan() {
   const el = document.getElementById('admin-laporan-table');
   try {
-    const data = await GET('/admin/laporan');
+    const data = await GET('/api/admin/laporan');
     if (!data.length) { el.innerHTML = '<div class="empty-state">Tidak ada laporan</div>'; return; }
     el.innerHTML = `<table>
       <thead><tr><th>Pelapor</th><th>Terlapor</th><th>Alasan</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr></thead>
