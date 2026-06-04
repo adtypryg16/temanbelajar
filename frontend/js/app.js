@@ -236,10 +236,13 @@ async function cariPartner() {
   grid.innerHTML = '<div class="loading-text">Mencari partner...</div>';
   try {
     let url = '/partner/cari?';
-    if (matkul) url += `matkul=${matkul}&`;
-    if (jurusan) url += `jurusan=${encodeURIComponent(jurusan)}&`;
-    if (semester) url += `semester=${semester}&`;
-    const partners = await GET(url.slice(0,-1)||'/partner/cari');
+    const params = [];
+    
+    if (matkul) params.push(`matkul=${matkul}`);
+    if (jurusan) params.push(`jurusan=${encodeURIComponent(jurusan)}`);
+    if (semester) params.push(`semester=${semester}`);
+    const finalUrl = params.length ? `${url}?$ {params.join('&')}` : url;
+    const partners = await GET (finalUrl);
     if (!partners.length) { grid.innerHTML = '<div class="empty-state">Tidak ada partner ditemukan. Coba filter lain.</div>'; return; }
     grid.innerHTML = partners.map(p => `
       <div class="partner-card">
