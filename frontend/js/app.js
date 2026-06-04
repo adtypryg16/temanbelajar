@@ -554,7 +554,7 @@ async function saveProfile() {
   };
   const suc = document.getElementById('profil-success');
   try {
-    await PUT('/auth/profile', body);
+    await PUT('/api/auth/profile', body);
     currentUser = { ...currentUser, ...body };
     setUser(currentUser);
     document.getElementById('sidebar-nama').textContent = body.nama;
@@ -608,7 +608,7 @@ async function loadAdminUsers() {
 async function changeUserStatus(id, status) {
   if (!confirm(`Ubah status user menjadi ${status}?`)) return;
   try {
-    await PUT(`/admin/users/${id}/status`, { status });
+    await PUT(`/api/admin/users/${id}/status`, { status });
     loadAdminUsers();
   } catch(e) { alert(e.message); }
 }
@@ -635,7 +635,7 @@ async function loadAdminLaporan() {
 }
 
 async function updateLaporan(id, status) {
-  try { await PUT(`/admin/laporan/${id}`, { status }); loadAdminLaporan(); }
+  try { await PUT(`/api/admin/laporan/${id}`, { status }); loadAdminLaporan(); }
   catch(e) { alert(e.message); }
 }
 
