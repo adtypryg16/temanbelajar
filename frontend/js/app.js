@@ -506,12 +506,12 @@ async function loadAllJadwal() {
 
 document.getElementById('h-jadwal')?.addEventListener && (async () => {
   try {
-    const rooms = await GET('/api/chat/rooms');
+    const rooms = await GET('/chat/rooms');
     let cnt = 0;
     const now = new Date();
     const weekLater = new Date(now.getTime() + 7*24*60*60*1000);
     for (const r of rooms) {
-      const jd = await GET(`/api/chat/rooms/${r.id}/jadwal`).catch(()=>[]);
+      const jd = await GET(`/chat/rooms/${r.id}/jadwal`).catch(()=>[]);
       cnt += jd.filter(j => { const d = new Date(j.tanggal); return d >= now && d <= weekLater; }).length;
     }
     document.getElementById('h-jadwal').textContent = cnt;
