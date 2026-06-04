@@ -155,6 +155,10 @@ async function loadBerandaData() {
     document.getElementById('h-partners').textContent = partners.length;
     document.getElementById('h-rooms').textContent = roomsData.length;
     document.getElementById('h-requests').textContent = pending.length;
+    catch (e) {
+    console.error(e);
+  }
+}
 
     // Rekomendasi (top 3)
     const rekEl = document.getElementById('rekomendasi-list');
