@@ -511,11 +511,3 @@ tr:hover td { background: var(--surface); }
   grid-template-columns: 1fr;
   gap: 10px;
 }
-
-@media (max-width: 768px) {
-  .btn-ajak {
-    width: 100%;
-    margin-top: 8px;
-  }
-}
-
