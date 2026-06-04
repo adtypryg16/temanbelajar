@@ -244,11 +244,14 @@ async function cariPartner() {
   const grid = document.getElementById('partner-grid');
   grid.innerHTML = '<div class="loading-text">Mencari partner...</div>';
   try {
-    let url = '/partner/cari?';
-    if (matkul) url += `matkul=${matkul}&`;
-    if (jurusan) url += `jurusan=${encodeURIComponent(jurusan)}&`;
-    if (semester) url += `semester=${semester}&`;
-    const partners = await GET(url.slice(0,-1)||'/partner/cari');
+   const url = `/api/partner/cari?` +
+  (matkul ? `matkul=${matkul}&` : '') +
+  (jurusan ? `jurusan=${encodeURIComponent(jurusan)}&` : '') +
+  (semester ? `semester=${semester}&` : '');
+
+const cleanUrl = url.endsWith('?') ? '/api/partner/cari' : url.replace(/&$/, '');
+
+const partners = await GET(cleanUrl);
     if (!partners.length) { grid.innerHTML = '<div class="empty-state">Tidak ada partner ditemukan. Coba filter lain.</div>'; return; }
     grid.innerHTML = partners.map(p => `
       <div class="partner-card">
