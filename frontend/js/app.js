@@ -279,7 +279,7 @@ function openRequestModal(userId, nama) {
 
 async function submitRequest() {
   try {
-    await POST('/partner/request', { penerima_id: pendingRequestTarget, pesan: document.getElementById('modal-pesan').value });
+    await POST('/api/partner/request', { penerima_id: pendingRequestTarget, pesan: document.getElementById('modal-pesan').value });
     closeModal('modal-request');
     alert('Ajakan berhasil terkirim!');
   } catch(e) { alert(e.message); }
