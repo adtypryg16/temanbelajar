@@ -1,4 +1,6 @@
-const BASE = 'https://temanbelajar-production.up.railway.app/api';
+const BASE = 'https://temanbelajar-production.up.railway.app';
+POST('/api/auth/login')
+POST('/api/auth/register')
 
 function getToken() { return localStorage.getItem('tb_token'); }
 function setToken(t) { localStorage.setItem('tb_token', t); }
