@@ -151,9 +151,6 @@ async function loadBerandaData() {
       GET('/chat/rooms'),
       GET('/partner/requests/masuk')
     ]);
-    const reqRaw = await GET('/partner/requests/masuk');
-    const reqData = reqRaw.data || reqRaw.requests || reqRaw || [];
-
     const pending = reqData.filter(r => r.status === 'pending');
     document.getElementById('h-partners').textContent = partners.length;
     document.getElementById('h-rooms').textContent = roomsData.length;
@@ -197,18 +194,15 @@ async function loadBerandaData() {
 /* ─── MATKUL ────────────────────────────────────────── */
 async function loadMatkul() {
   try {
-    const res = await GET('/partner/matkul');
-    allMatkul = res.data || res.matkul || [];
+    allMatkul = await GET('/partner/matkul');
     loadMatkulCheckboxes();
-  } catch(e) { allmatkul = []; }
+  } catch(e) {}
 }
 
 function loadMatkulFilter() {
   const sel = document.getElementById('filter-matkul');
   sel.innerHTML = '<option value="">Semua Mata Kuliah</option>';
-  (allMatkul || []).forEach(m => {
-    sel.innerHTML += `<option value="${m.id}">${esc(m.nama)} (${esc(m.jurusan)})</option>`;
-});
+  allMatkul.forEach(m => sel.innerHTML += `<option value="${m.id}">${esc(m.nama)} (${esc(m.jurusan)})</option>`);
 }
 
 function loadMatkulCheckboxes() {
@@ -533,7 +527,7 @@ async function saveProfile() {
   };
   const suc = document.getElementById('profil-success');
   try {
-    await PUT('/api/auth/profile', body);
+    await PUT('/auth/profile', body);
     currentUser = { ...currentUser, ...body };
     setUser(currentUser);
     document.getElementById('sidebar-nama').textContent = body.nama;
