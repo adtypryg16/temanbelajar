@@ -554,7 +554,7 @@ async function saveProfile() {
   };
   const suc = document.getElementById('profil-success');
   try {
-    await PUT('api/auth/profile', body);
+    await PUT('/auth/profile', body);
     currentUser = { ...currentUser, ...body };
     setUser(currentUser);
     document.getElementById('sidebar-nama').textContent = body.nama;
