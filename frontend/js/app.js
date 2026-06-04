@@ -405,7 +405,7 @@ async function openRoom(roomId, partnerNama, partnerAvatar) {
 async function loadMessages() {
   if (!currentRoom) return;
   try {
-    const msgs = await GET(`/api/chat/rooms/${currentRoom.id}/messages`);
+    const msgs = await GET(`/chat/rooms/${currentRoom.id}/messages`);
     const area = document.getElementById('messages-area');
     if (!area) return;
     if (msgs.length === lastMsgCount) return;
@@ -431,7 +431,7 @@ async function sendMessage() {
   if (!isi || !currentRoom) return;
   input.value = '';
   try {
-    await POST(`/api/chat/rooms/${currentRoom.id}/messages`, { isi });
+    await POST(`/chat/rooms/${currentRoom.id}/messages`, { isi });
     lastMsgCount = 0;
     await loadMessages();
   } catch(e) { alert(e.message); }
@@ -460,7 +460,7 @@ async function submitJadwal() {
   };
   if (!body.judul || !body.tanggal) return alert('Judul dan tanggal wajib diisi');
   try {
-    await POST(`/api/chat/rooms/${activeJadwalRoom}/jadwal`, body);
+    await POST(`/chat/rooms/${activeJadwalRoom}/jadwal`, body);
     closeModal('modal-jadwal');
     alert('Jadwal berhasil dibuat!');
     loadAllJadwal();
@@ -471,12 +471,12 @@ async function loadAllJadwal() {
   const el = document.getElementById('jadwal-list');
   el.innerHTML = '<div class="loading-text">Memuat...</div>';
   try {
-    const rooms = await GET('/api/chat/rooms');
+    const rooms = await GET('/chat/rooms');
     if (!rooms.length) { el.innerHTML = '<div class="empty-state">Belum ada jadwal. Buat jadwal dari halaman Chat.</div>'; return; }
     let allJadwal = [];
     for (const r of rooms) {
       try {
-        const jd = await GET(/api`/chat/rooms/${r.id}/jadwal`);
+        const jd = await GET(`/chat/rooms/${r.id}/jadwal`);
         jd.forEach(j => { j._partner = r.partner_nama; });
         allJadwal = allJadwal.concat(jd);
       } catch(e) {}
