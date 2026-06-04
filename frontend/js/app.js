@@ -203,7 +203,7 @@ async function loadBerandaData() {
 /* ─── MATKUL ────────────────────────────────────────── */
 async function loadMatkul() {
   try {
-    const res = await GET('/partner/matkul');
+    const res = await GET('/api/partner/matkul');
     allMatkul = res?.data || res || [];
     if (!Array.isArray(allMatkul)) {
       allMatkul = [];
@@ -336,7 +336,7 @@ async function loadRequests(type) {
 
 async function respondRequest(id, status) {
   try {
-    const res = await PUT(`/partner/request/${id}`, { status });
+    const res = await PUT(`/api/partner/request/${id}`, { status });
     loadRequests('masuk');
     loadBerandaData();
     if (status === 'diterima') {
@@ -347,7 +347,7 @@ async function respondRequest(id, status) {
 
 async function loadRequestBadge() {
   try {
-    const data = await GET('/partner/requests/masuk');
+    const data = await GET('/api/partner/requests/masuk');
     const pending = data.filter(r => r.status === 'pending').length;
     const badge = document.getElementById('req-badge');
     if (pending > 0) { badge.textContent = pending; badge.classList.remove('hidden'); }
