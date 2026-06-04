@@ -146,16 +146,25 @@ function switchAdminTab(name, el) {
 /* ─── BERANDA ───────────────────────────────────────── */
 async function loadBerandaData() {
   try {
-    const [partners, roomsData, reqData] = await Promise.all([
+    const [partnersRes, roomsDataRes, reqDataRes] = await Promise.all([
       GET('/partner/cari'),
       GET('/chat/rooms'),
       GET('/partner/requests/masuk')
     ]);
-    const pending = reqData.filter(r => r.status === 'pending');
+
+    const partners = partnersRes?.data || partnersRes || [];
+    const roomsData = roomsDataRes?.data || roomsDataRes || [];
+    const reqData = reqDataRes?.data || reqDataRes || [];
+
+    const pending = Array.isArray(reqData)
+      ? reqData.filter(r => r.status === 'pending')
+      : [];
+
     document.getElementById('h-partners').textContent = partners.length;
     document.getElementById('h-rooms').textContent = roomsData.length;
     document.getElementById('h-requests').textContent = pending.length;
 
+  }
     // Rekomendasi (top 3)
     const rekEl = document.getElementById('rekomendasi-list');
     if (!partners.length) {
