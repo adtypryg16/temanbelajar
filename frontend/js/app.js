@@ -203,7 +203,7 @@ async function loadBerandaData() {
 /* ─── MATKUL ────────────────────────────────────────── */
 async function loadMatkul() {
   try {
-    const res = await GET('/api/partner/matkul');
+    const res = await GET('/partner/matkul');
     allMatkul = res?.data || res || [];
     if (!Array.isArray(allMatkul)) {
       allMatkul = [];
@@ -248,7 +248,7 @@ async function cariPartner() {
     if (matkul) url += `matkul=${matkul}&`;
     if (jurusan) url += `jurusan=${encodeURIComponent(jurusan)}&`;
     if (semester) url += `semester=${semester}&`;
-    const partners = await GET(url.slice(0,-1)||'/api/partner/cari');
+    const partners = await GET(url.slice(0,-1)||'/partner/cari');
     if (!partners.length) { grid.innerHTML = '<div class="empty-state">Tidak ada partner ditemukan. Coba filter lain.</div>'; return; }
     grid.innerHTML = partners.map(p => `
       <div class="partner-card">
@@ -307,7 +307,7 @@ async function loadRequests(type) {
   const el = document.getElementById('requests-' + type);
   el.innerHTML = '<div class="loading-text">Memuat...</div>';
   try {
-    const data = await GET('/api/partner/requests/' + type);
+    const data = await GET('/partner/requests/' + type);
     if (!data.length) { el.innerHTML = '<div class="empty-state">Tidak ada permintaan</div>'; return; }
     el.innerHTML = data.map(r => {
       const nama = type === 'masuk' ? r.pengirim_nama : r.penerima_nama;
@@ -518,7 +518,7 @@ document.getElementById('h-jadwal')?.addEventListener && (async () => {
 /* ─── PROFIL ────────────────────────────────────────── */
 async function loadProfil() {
   try {
-    const data = await GET('/api/auth/me');
+    const data = await GET('/auth/me');
     document.getElementById('profil-avatar-display').textContent = data.nama[0].toUpperCase();
     document.getElementById('profil-nama-display').textContent = data.nama;
     document.getElementById('profil-jurusan-display').textContent = `${data.jurusan||'—'} · Semester ${data.semester||'?'}`;
@@ -565,7 +565,7 @@ async function saveProfile() {
 /* ─── ADMIN ─────────────────────────────────────────── */
 async function loadAdminStats() {
   try {
-    const s = await GET('/api/admin/stats');
+    const s = await GET('/admin/stats');
     document.getElementById('admin-stats').innerHTML = `
       <div class="stat-card"><div class="stat-icon">👥</div><div><div class="stat-val">${s.total_users}</div><div class="stat-lbl">Total Mahasiswa</div></div></div>
       <div class="stat-card"><div class="stat-icon">💬</div><div><div class="stat-val">${s.total_rooms}</div><div class="stat-lbl">Room Diskusi</div></div></div>
