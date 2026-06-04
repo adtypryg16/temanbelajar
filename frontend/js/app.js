@@ -194,19 +194,34 @@ async function loadBerandaData() {
 /* ─── MATKUL ────────────────────────────────────────── */
 async function loadMatkul() {
   try {
-    allMatkul = await GET('/partner/matkul');
+    const res = await GET('/partner/matkul');
+    allMatkul = res?.data || res || [];
+    if (!Array.isArray(allMatkul)) {
+      allMatkul = [];
+    }
     loadMatkulCheckboxes();
-  } catch(e) {}
+  } catch(e) {
+    console.error(e);
+    allMatkul = [];
+  }
 }
 
 function loadMatkulFilter() {
   const sel = document.getElementById('filter-matkul');
   sel.innerHTML = '<option value="">Semua Mata Kuliah</option>';
+  
+  const data = Array.isArray(allMatkul) ?
+allMatkul : [];
+  
   allMatkul.forEach(m => sel.innerHTML += `<option value="${m.id}">${esc(m.nama)} (${esc(m.jurusan)})</option>`);
 }
 
 function loadMatkulCheckboxes() {
   const el = document.getElementById('matkul-checkboxes');
+  
+  const data = Array.isArray(allMatkul) ?
+allMatkul : [];
+  
   el.innerHTML = allMatkul.map(m =>
     `<label class="matkul-check"><input type="checkbox" value="${m.id}" class="mk-cb"> ${esc(m.nama)}</label>`
   ).join('');
