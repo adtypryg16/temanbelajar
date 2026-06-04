@@ -471,7 +471,7 @@ async function loadAllJadwal() {
   const el = document.getElementById('jadwal-list');
   el.innerHTML = '<div class="loading-text">Memuat...</div>';
   try {
-    const rooms = await GET('/chat/rooms');
+    const rooms = await GET('/api/chat/rooms');
     if (!rooms.length) { el.innerHTML = '<div class="empty-state">Belum ada jadwal. Buat jadwal dari halaman Chat.</div>'; return; }
     let allJadwal = [];
     for (const r of rooms) {
