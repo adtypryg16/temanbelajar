@@ -397,37 +397,4 @@ tr:hover td { background: var(--surface); }
   .home-sections, .profil-layout { grid-template-columns: 1fr; }
   .page { padding: 20px; }
 }
-/* =========================
-   MOBILE RESPONSIVE FIX
-========================= */
-
-@media (max-width: 768px) {
-
-  html, body {
-    font-size: 14px;
-  }
-
-  /* layout utama jadi 1 kolom */
-  .container,
-  .main-container,
-  .app-container {
-    flex-direction: column !important;
-  }
-
-  /* sidebar jadi bottom nav */
-  .sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 999;
-    border-top: 1px solid var(--border);
-    background: var(--bg2);
-  }
-
 
