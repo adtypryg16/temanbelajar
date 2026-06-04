@@ -474,3 +474,57 @@ tr:hover td { background: var(--surface); }
     right: 10px;
   }
 }
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 80px;
+}
+
+.message {
+  max-width: 75%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin: 6px;
+  font-size: 14px;
+}
+
+.message.me {
+  align-self: flex-end;
+  background: var(--accent);
+  color: white;
+}
+
+.message.other {
+  align-self: flex-start;
+  background: var(--surface2);
+}
+
+.partner-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .btn-ajak {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+/* smooth UI feel */
+* {
+  transition: all 0.2s ease;
+}
+
+/* scroll lebih halus */
+html {
+  scroll-behavior: smooth;
+}
