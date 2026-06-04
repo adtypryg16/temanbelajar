@@ -35,7 +35,7 @@ async function doLogin() {
   const err = document.getElementById('login-error');
   err.classList.add('hidden');
   try {
-    const data = await POST('/auth/login', { email, password });
+    const data = await POST('/api/auth/login', { email, password });
     setToken(data.token);
     setUser(data.user);
     currentUser = data.user;
