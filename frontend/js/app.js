@@ -151,7 +151,10 @@ async function loadBerandaData() {
       GET('/chat/rooms'),
       GET('/partner/requests/masuk')
     ]);
-    const pending = (reqData.data || reqData || []).(r => r.status === 'pending');
+    const reqRaw = await GET('/partner/requests/masuk');
+    const reqData = reqRaw.data || reqRaw.requests || reqRaw || [];
+
+    const pending = reqData.filter(r => r.status === 'pending');
     document.getElementById('h-partners').textContent = partners.length;
     document.getElementById('h-rooms').textContent = roomsData.length;
     document.getElementById('h-requests').textContent = pending.length;
