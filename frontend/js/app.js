@@ -146,25 +146,16 @@ function switchAdminTab(name, el) {
 /* ─── BERANDA ───────────────────────────────────────── */
 async function loadBerandaData() {
   try {
-    const [partnersRes, roomsDataRes, reqDataRes] = await Promise.all([
+    const [partners, roomsData, reqData] = await Promise.all([
       GET('/partner/cari'),
       GET('/chat/rooms'),
       GET('/partner/requests/masuk')
     ]);
-
-    const partners = partnersRes?.data || partnersRes || [];
-    const roomsData = roomsDataRes?.data || roomsDataRes || [];
-    const reqData = reqDataRes?.data || reqDataRes || [];
-
-    const pending = Array.isArray(reqData)
-      ? reqData.filter(r => r.status === 'pending')
-      : [];
-
+    const pending = reqData.filter(r => r.status === 'pending');
     document.getElementById('h-partners').textContent = partners.length;
     document.getElementById('h-rooms').textContent = roomsData.length;
     document.getElementById('h-requests').textContent = pending.length;
 
-  }
     // Rekomendasi (top 3)
     const rekEl = document.getElementById('rekomendasi-list');
     if (!partners.length) {
@@ -245,13 +236,10 @@ async function cariPartner() {
   grid.innerHTML = '<div class="loading-text">Mencari partner...</div>';
   try {
     let url = '/partner/cari?';
-    const params = [];
-    
-    if (matkul) params.push(`matkul=${matkul}`);
-    if (jurusan) params.push(`jurusan=${encodeURIComponent(jurusan)}`);
-    if (semester) params.push(`semester=${semester}`);
-    const finalUrl = params.length ? `${url}?$ {params.join('&')}` : url;
-    const partners = await GET (finalUrl);
+    if (matkul) url += `matkul=${matkul}&`;
+    if (jurusan) url += `jurusan=${encodeURIComponent(jurusan)}&`;
+    if (semester) url += `semester=${semester}&`;
+    const partners = await GET(url.slice(0,-1)||'/partner/cari');
     if (!partners.length) { grid.innerHTML = '<div class="empty-state">Tidak ada partner ditemukan. Coba filter lain.</div>'; return; }
     grid.innerHTML = partners.map(p => `
       <div class="partner-card">
