@@ -151,16 +151,17 @@ async function loadBerandaData() {
       GET('/api/chat/rooms'),
       GET('/api/partner/requests/masuk')
     ]);
-    const pending = reqData.filter(r => r.status === 'pending');
+
+    const pendingRaw = reqData?.data ?? reqData ?? [];
+    const pending = Array.isArray(pendingRaw)
+      ? pendingRaw.filter(r => r.status === 'pending')
+      : [];
+
     document.getElementById('h-partners').textContent = partners.length;
     document.getElementById('h-rooms').textContent = roomsData.length;
     document.getElementById('h-requests').textContent = pending.length;
-    catch (e) {
-    console.error(e);
-  }
-}
 
-    // Rekomendasi (top 3)
+    // Rekomendasi
     const rekEl = document.getElementById('rekomendasi-list');
     if (!partners.length) {
       rekEl.innerHTML = '<div class="loading-text">Lengkapi profil untuk rekomendasi</div>';
@@ -173,10 +174,11 @@ async function loadBerandaData() {
             <div class="partner-mini-meta">${esc(p.jurusan||'—')} · Sem ${p.semester||'?'}</div>
           </div>
           <button class="btn-sm btn-chat" onclick="openRequestModal(${p.id},'${esc(p.nama)}')">Ajak</button>
-        </div>`).join('');
+        </div>
+      `).join('');
     }
 
-    // Request preview (top 3 pending)
+    // Request preview
     const reqEl = document.getElementById('request-preview');
     if (!pending.length) {
       reqEl.innerHTML = '<div class="loading-text">Tidak ada permintaan masuk</div>';
@@ -190,11 +192,14 @@ async function loadBerandaData() {
           </div>
           <button class="btn-sm btn-accept" onclick="respondRequest(${r.id},'diterima')">✓</button>
           <button class="btn-sm btn-reject" onclick="respondRequest(${r.id},'ditolak')">✗</button>
-        </div>`).join('');
+        </div>
+      `).join('');
     }
-  } catch(e) { console.error(e); }
-}
 
+  } catch (e) {
+    console.error(e);
+  }
+}
 /* ─── MATKUL ────────────────────────────────────────── */
 async function loadMatkul() {
   try {
