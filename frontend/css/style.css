@@ -387,268 +387,56 @@ tr:hover td { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
 
-/* ═══════════════════════════════════════════════
-   RESPONSIVE — TABLET  ≤900px
-═══════════════════════════════════════════════ */
+/* ─── RESPONSIVE ───────────────────────────────────── */
 @media (max-width: 900px) {
   .auth-left { display: none; }
   .auth-right { padding: 32px 24px; }
-  .sidebar { width: 64px; }
+  .sidebar { width: 60px; }
   .nav-label, .brand-name, .user-info-sm { display: none; }
-  .nav-item { justify-content: center; padding: 12px; }
-  .nav-icon { width: auto; }
-  .sidebar-user { justify-content: center; padding: 16px 0; }
-  .btn-logout { margin: 0 auto; }
   .stats-grid, .admin-stats { grid-template-columns: repeat(2, 1fr); }
   .home-sections, .profil-layout { grid-template-columns: 1fr; }
-  .page { padding: 24px; }
-  .partner-grid { grid-template-columns: 1fr 1fr; }
+  .page { padding: 20px; }
 }
 
-/* ═══════════════════════════════════════════════
-   RESPONSIVE — MOBILE  ≤600px
-═══════════════════════════════════════════════ */
+/* ── LOGOUT MOBILE (di halaman Profil) ── */
+.mobile-logout-wrap {
+  display: none; /* hidden di desktop */
+}
+
 @media (max-width: 600px) {
-
-  /* ── APP LAYOUT ── */
-  .app {
-    flex-direction: column;
-    position: relative;
+  .mobile-logout-wrap {
+    display: block;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
   }
 
-  /* Sembunyikan sidebar sama sekali */
-  .sidebar { display: none !important; }
-
-  .main-content {
-    flex: 1;
-    padding-bottom: 72px; /* ruang bottom nav */
-  }
-
-  /* ── BOTTOM NAVIGATION ── */
-  .bottom-nav {
-    display: flex !important;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: var(--bg2);
-    border-top: 1.5px solid var(--border);
-    z-index: 200;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
-  }
-
-  .bottom-nav a {
-    flex: 1;
+  .btn-logout-mobile {
+    width: 100%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    padding: 10px 4px 8px;
-    text-decoration: none;
-    color: var(--text3);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    transition: color 0.15s;
-    position: relative;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .bottom-nav a .nav-icon {
-    font-size: 20px;
-    line-height: 1;
-    width: auto;
-  }
-
-  .bottom-nav a.active { color: var(--accent2); }
-
-  .bottom-nav a.active::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 15%; right: 15%;
-    height: 2.5px;
-    background: var(--accent);
-    border-radius: 0 0 4px 4px;
-  }
-
-  .bottom-nav .badge {
-    position: absolute;
-    top: 5px;
-    right: calc(50% - 20px);
-    min-width: 16px; height: 16px;
-    font-size: 9px; padding: 0 4px;
-  }
-
-  /* ── PAGES ── */
-  .page { padding: 16px 14px 8px; }
-  .page-header { margin-bottom: 16px; }
-  .page-header h1 { font-size: 21px; }
-  .page-header p { font-size: 13px; }
-
-  /* ── AUTH ── */
-  .auth-right { padding: 28px 18px 40px; }
-  .auth-form h2 { font-size: 26px; }
-  .form-row { grid-template-columns: 1fr; gap: 0; }
-
-  /* ── STATS GRID ── */
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin-bottom: 16px;
-  }
-  .stat-card { padding: 14px 12px; gap: 10px; border-radius: 10px; }
-  .stat-icon { font-size: 22px; }
-  .stat-val { font-size: 22px; }
-  .stat-lbl { font-size: 10px; }
-
-  /* ── HOME SECTIONS ── */
-  .home-sections { grid-template-columns: 1fr; gap: 12px; }
-  .home-card { padding: 16px; border-radius: 12px; }
-  .home-card h3 { font-size: 14px; margin-bottom: 12px; }
-
-  /* ── PARTNER GRID ── */
-  .partner-grid { grid-template-columns: 1fr; gap: 10px; }
-  .partner-card { padding: 14px; gap: 10px; }
-  .partner-card-top { gap: 10px; }
-  .p-avatar { width: 40px; height: 40px; font-size: 16px; }
-  .p-name { font-size: 14px; }
-  .partner-actions { flex-wrap: wrap; gap: 6px; }
-  .partner-actions .btn-sm { flex: 1; text-align: center; min-width: 80px; }
-
-  /* ── FILTER BAR ── */
-  .filter-bar { flex-direction: column; gap: 8px; margin-bottom: 16px; }
-  .filter-select { width: 100%; min-width: unset; }
-  .filter-bar .btn-primary { width: 100%; }
-
-  /* ── TABS ── */
-  .tabs, .admin-tabs {
-    width: 100%;
-    display: flex;
-  }
-  .tab {
-    flex: 1;
-    text-align: center;
-    padding: 9px 6px;
-    font-size: 12px;
-  }
-
-  /* ── REQUESTS ── */
-  .request-card {
-    flex-wrap: wrap;
-    padding: 12px;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .request-info { width: calc(100% - 54px); }
-  .request-actions {
-    width: 100%;
-    justify-content: flex-end;
-    padding-top: 4px;
-  }
-
-  /* ── CHAT ── */
-  /* Page chat tidak punya padding default */
-  #page-chat { padding: 0; }
-
-  .chat-layout {
-    height: calc(100vh - 128px); /* navbar atas + bottom nav */
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Daftar room — full screen, bisa digeser keluar */
-  .room-list-panel {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    z-index: 10;
-    transform: translateX(0);
-    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-    border-right: none;
-  }
-
-  .room-list-panel.hidden-mobile {
-    transform: translateX(-100%);
-    pointer-events: none;
-  }
-
-  .chat-panel {
-    position: absolute;
-    inset: 0;
-    z-index: 9;
-  }
-
-  /* Tombol "← Kembali" di header chat — tampil di mobile */
-  .chat-back-btn {
-    display: flex !important;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 8px;
-    margin-right: 4px;
-    background: none;
-    border: none;
-    color: var(--accent2);
-    font-size: 22px;
+    padding: 13px;
+    background: rgba(248, 113, 113, 0.08);
+    border: 1.5px solid rgba(248, 113, 113, 0.25);
+    border-radius: var(--r);
+    color: var(--red);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .chat-header { padding: 12px 14px; gap: 8px; }
-  .chat-header-info h4 { font-size: 14px; }
-  .chat-header-info small { font-size: 11px; }
-
-  .messages-area { padding: 12px 10px; gap: 10px; }
-  .msg { max-width: 85%; }
-  .msg-bubble { font-size: 13px; padding: 9px 12px; }
-  .msg-avatar { width: 28px; height: 28px; font-size: 11px; }
-
-  .chat-input-area { padding: 10px 10px; gap: 8px; }
-  .chat-input-area input { padding: 10px 14px; font-size: 14px; }
-  .btn-send { width: 42px; height: 42px; font-size: 16px; }
-
-  .room-list-header { padding: 16px 14px; }
-  .room-item { padding: 12px 14px; }
-
-  /* ── JADWAL ── */
-  .jadwal-card { padding: 12px; gap: 12px; border-radius: 10px; }
-  .jadwal-date { min-width: 56px; padding: 8px 6px; }
-  .jadwal-num { font-size: 20px; }
-  .jadwal-title { font-size: 14px; }
-  .jadwal-meta { font-size: 12px; }
-
-  /* ── PROFIL ── */
-  .profil-layout { grid-template-columns: 1fr; gap: 14px; }
-  .profil-card { padding: 20px; border-radius: 12px; }
-  .profil-avatar { width: 68px; height: 68px; font-size: 24px; }
-  .profil-edit { padding: 18px; border-radius: 12px; }
-  .profil-edit h3 { font-size: 16px; margin-bottom: 18px; }
-  .matkul-checkboxes { grid-template-columns: 1fr; max-height: 180px; }
-
-  /* ── ADMIN ── */
-  .admin-stats { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-  .admin-search { flex-direction: column; gap: 8px; }
-  .admin-search input, .admin-search select { width: 100%; }
-  .admin-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table { min-width: 520px; }
-  th, td { padding: 10px 12px; font-size: 12px; }
-
-  /* ── MODAL — slide dari bawah ── */
-  .modal { align-items: flex-end; padding: 0; }
-  .modal-box {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 20px 20px 0 0;
-    padding: 24px 18px;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-    animation: slideUp 0.25s ease;
+  .btn-logout-mobile:hover,
+  .btn-logout-mobile:active {
+    background: rgba(248, 113, 113, 0.18);
+    border-color: rgba(248, 113, 113, 0.5);
   }
-  @keyframes slideUp {
-    from { transform: translateY(60px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
+
+  .btn-logout-mobile span {
+    font-size: 18px;
   }
-  .modal-actions { flex-direction: column-reverse; gap: 8px; }
-  .modal-actions button { width: 100%; justify-content: center; }
 }
-
-/* Bottom nav tersembunyi di desktop */
-.bottom-nav { display: none; }
