@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+  /* tombol back chat — hidden di desktop */
+  .chat-back-btn { display: none; }
+</style>
 </head>
 <body class="auth-page">
 
@@ -145,6 +149,26 @@
       <button class="btn-logout" onclick="doLogout()" title="Keluar">⏻</button>
     </div>
   </aside>
+
+  <!-- BOTTOM NAVIGATION (mobile only) -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <a href="#" class="active" data-page="beranda" onclick="showPage('beranda',this);setBottomActive(this)">
+      <span class="nav-icon">🏠</span><span>Beranda</span>
+    </a>
+    <a href="#" data-page="cari" onclick="showPage('cari',this);setBottomActive(this)">
+      <span class="nav-icon">🔍</span><span>Cari</span>
+    </a>
+    <a href="#" data-page="requests" onclick="showPage('requests',this);setBottomActive(this)">
+      <span class="nav-icon">📨</span><span>Permintaan</span>
+      <span class="badge hidden" id="req-badge-bottom">0</span>
+    </a>
+    <a href="#" data-page="chat" onclick="showPage('chat',this);setBottomActive(this)">
+      <span class="nav-icon">💬</span><span>Chat</span>
+    </a>
+    <a href="#" data-page="profil" onclick="showPage('profil',this);setBottomActive(this)">
+      <span class="nav-icon">👤</span><span>Profil</span>
+    </a>
+  </nav>
 
   <!-- MAIN CONTENT -->
   <main class="main-content">
@@ -403,5 +427,52 @@
 
 <script src="js/api.js"></script>
 <script src="js/app.js"></script>
+<script>
+/* ── BOTTOM NAV HELPER ── */
+function setBottomActive(el) {
+  document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
+  if (el && el.closest('.bottom-nav')) el.classList.add('active');
+  // sync dari sidebar ke bottom-nav
+  const page = el ? (el.dataset.page || el.closest('[data-page]')?.dataset.page) : null;
+  if (page) {
+    document.querySelectorAll('.bottom-nav a').forEach(a => {
+      if (a.dataset.page === page) a.classList.add('active');
+    });
+  }
+}
+
+/* patch showPage agar sync bottom-nav aktif */
+const _origShowPage = typeof showPage !== 'undefined' ? showPage : null;
+document.addEventListener('DOMContentLoaded', () => {
+  // Sync badge permintaan ke bottom-nav juga
+  const observer = new MutationObserver(() => {
+    const src = document.getElementById('req-badge');
+    const dst = document.getElementById('req-badge-bottom');
+    if (src && dst) {
+      dst.textContent = src.textContent;
+      dst.classList.toggle('hidden', src.classList.contains('hidden'));
+    }
+  });
+  const badge = document.getElementById('req-badge');
+  if (badge) observer.observe(badge, { attributes: true, childList: true, characterData: true });
+
+  // ── MOBILE CHAT: patch openRoom agar toggle panel ──
+  const _origOpenRoom = window.openRoom;
+  window.openRoom = function(...args) {
+    if (_origOpenRoom) _origOpenRoom.apply(this, args);
+    if (window.innerWidth <= 600) {
+      // sembunyikan room list, tampilkan chat panel
+      const rl = document.querySelector('.room-list-panel');
+      if (rl) rl.classList.add('hidden-mobile');
+    }
+  };
+});
+
+/* Mobile chat: kembali ke daftar room */
+function mobileBackToRooms() {
+  const rl = document.querySelector('.room-list-panel');
+  if (rl) rl.classList.remove('hidden-mobile');
+}
+</script>
 </body>
 </html>
