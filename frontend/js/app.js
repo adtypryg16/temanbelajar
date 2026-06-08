@@ -297,7 +297,7 @@ function openLaporModal(userId, nama) {
 
 async function submitLaporan() {
   try {
-    await POST('/admin/laporan', { terlapor_id: pendingLaporTarget, alasan: document.getElementById('modal-alasan').value });
+    await POST('/api/admin/laporan', { terlapor_id: pendingLaporTarget, alasan: document.getElementById('modal-alasan').value });
     closeModal('modal-lapor');
     alert('Laporan terkirim!');
   } catch(e) { alert(e.message); }
@@ -616,7 +616,7 @@ async function changeUserStatus(id, status) {
 async function loadAdminLaporan() {
   const el = document.getElementById('admin-laporan-table');
   try {
-    const data = await GET('/admin/laporan');
+    const data = await GET('/api/admin/laporan');
     if (!data.length) { el.innerHTML = '<div class="empty-state">Tidak ada laporan</div>'; return; }
     el.innerHTML = `<table>
       <thead><tr><th>Pelapor</th><th>Terlapor</th><th>Alasan</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr></thead>
