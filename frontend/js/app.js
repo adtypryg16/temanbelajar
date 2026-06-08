@@ -678,18 +678,4 @@ document.querySelectorAll('.modal').forEach(m => {
 
 
 
-// baruuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
-const chatLayout = document.querySelector(".chat-layout");
-const rooms = document.querySelectorAll(".room-item");
-const chatTitle = document.getElementById("chat-title");
 
-rooms.forEach(room => {
-  room.addEventListener("click", () => {
-
-    // buka chat mode (WAJIB untuk HP)
-    chatLayout.classList.add("chat-open");
-
-    // ganti judul chat
-    chatTitle.innerText = room.innerText;
-  });
-});
