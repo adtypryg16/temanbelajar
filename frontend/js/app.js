@@ -677,13 +677,3 @@ document.querySelectorAll('.modal').forEach(m => {
 });
 
 
-
-
-document.querySelectorAll(".room-item").forEach(r => {
-  r.onclick = () => {
-    document.querySelector(".chat-layout").classList.add("chat-open");
-  }
-});
-
-
-
