@@ -471,7 +471,7 @@ tr:hover td { background: var(--surface); }
     bottom: 60px; /* di atas bottom nav */
     z-index: 50;
     background: white;
-    display: flex; /* tersembunyi sampai room dipilih */
+    display: none; /* tersembunyi sampai room dipilih */
     flex-direction: column;
   }
 
