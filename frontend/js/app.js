@@ -568,7 +568,7 @@ async function saveProfile() {
 /* ─── ADMIN ─────────────────────────────────────────── */
 async function loadAdminStats() {
   try {
-    const s = await GET('/admin/stats');
+    const s = await GET('/api/admin/stats');
     document.getElementById('admin-stats').innerHTML = `
       <div class="stat-card"><div class="stat-icon">👥</div><div><div class="stat-val">${s.total_users}</div><div class="stat-lbl">Total Mahasiswa</div></div></div>
       <div class="stat-card"><div class="stat-icon">💬</div><div><div class="stat-val">${s.total_rooms}</div><div class="stat-lbl">Room Diskusi</div></div></div>
@@ -582,7 +582,7 @@ async function loadAdminUsers() {
   const status = document.getElementById('admin-status-filter')?.value || '';
   const el = document.getElementById('admin-users-table');
   try {
-    let url = '/admin/users?';
+    let url = '/api/admin/users?';
     if (search) url += `search=${encodeURIComponent(search)}&`;
     if (status) url += `status=${status}`;
     const users = await GET(url);
