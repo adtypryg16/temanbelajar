@@ -381,9 +381,14 @@ async function openRoom(roomId, partnerNama, partnerAvatar) {
   document.querySelectorAll('.room-item').forEach(el => el.classList.remove('active'));
   event?.currentTarget?.classList.add('active');
 
+  // Mobile: tampilkan chat panel, sembunyikan room list
+  const chatLayout = document.querySelector('.chat-layout');
+  if (chatLayout) chatLayout.classList.add('chat-open');
+
   const chatPanel = document.getElementById('chat-panel');
   chatPanel.innerHTML = `
     <div class="chat-header">
+      <button class="btn-back-chat" onclick="closeChat()" aria-label="Kembali ke daftar room">&#8592;</button>
       <div class="p-avatar" style="background:${avatarColor(partnerNama)};width:38px;height:38px;font-size:14px">${partnerNama[0].toUpperCase()}</div>
       <div class="chat-header-info">
         <h4>${esc(partnerNama)}</h4>
@@ -438,6 +443,13 @@ async function sendMessage() {
 }
 
 async function pollMessages() { await loadMessages(); }
+
+function closeChat() {
+  currentRoom = null;
+  const chatLayout = document.querySelector('.chat-layout');
+  if (chatLayout) chatLayout.classList.remove('chat-open');
+  document.querySelectorAll('.room-item').forEach(el => el.classList.remove('active'));
+}
 
 /* ─── JADWAL ────────────────────────────────────────── */
 function openJadwalModal(roomId) {
@@ -675,5 +687,3 @@ function fmtDate(dateStr) {
 document.querySelectorAll('.modal').forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) m.classList.add('hidden'); });
 });
-
-
